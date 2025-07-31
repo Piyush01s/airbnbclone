@@ -1,0 +1,98 @@
+<% layout("layout/boilerplate")-%> 
+<body>
+ <!-- <h1>All listing</h1>  -->
+<style>
+    #filter {
+        display: flex;
+
+    }
+    .filter {
+        display : inline;
+        margin-right: 2rem;
+        margin-top: 1rem;
+        text-align: center;
+        cursor: pointer;
+
+    }
+    .filter i {
+        color: #ff365a;
+        font-size: 1.2rem;
+        justify-content: center;
+
+    }
+    .filter:hover i {
+        color: #e32246;
+        opacity: 1;
+    }
+    .filter p{
+        
+        opacity: 0.8;
+        text-align: center;
+
+    }
+    .filter:hover p {
+        color: #ff385c;
+        opacity: 1;
+    }
+</style>
+<div id="filter" class="container">
+    <div class="filter">
+        <i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+    </div>
+    <div class="filter">
+        <i class="fa-solid fa-house"></i>
+        <p>rooms</p>
+    </div>
+     <div class="filter">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <p>Castle</p>
+    </div>
+    <div class="filter">
+        <i class="fa-solid fa-person-swimming"></i>
+        <p>Amazing Pools</p>
+    </div>
+    <div class="filter">
+        <i class="fa-solid fa-mountain"></i>
+        <p>mountain</p>
+    </div>
+    <div class="filter">
+        <i class="fa-solid fa-fire-burner"></i>
+        <p>Boner fire</p>
+    </div>
+    <div class="filter">
+        <i class="fa-solid fa-crown"></i>
+        <p>royal place</p>
+    </div>
+     <div class="filter">
+        <i class="fa-solid fa-igloo"></i>
+        <p>snow places</p>
+    </div>
+</div>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4 cardcontainer">
+
+    <% for(let listing of listings){ %>
+        
+            <div class="card col" style="width: 30%; margin: 1rem;">
+                <a href="/listings/<%= listing._id %>">
+            <% if (listing.image && listing.image.length > 0) { %>
+                <img src="<%= listing.image[0].url %>" class="card-img-top " style="height: 20rem;" alt="...">
+            <% } else { %>
+                <img src="https://media.istockphoto.com/id/1227329047/photo/two-ampty-chairs-facing-magnificent-sunset-view-at-beach.webp?a=1&b=1&s=612x612&w=0&k=20&c=A0igkvIGLJermqzOYd0NH4pelYlfGzjNEN4MzHJ-LU4=" class="card-img-top " alt="No image">
+            <% } %>
+            </a>
+
+            <div class="card-body">
+                <h5 class="card-title"><a href="/listings/<%= listing._id %>"><%= listing.title %></a></h5>
+                <p class="card-text"><%= listing.description %></p>
+                <p class="card-text">&#8377; <%= listing.price.toLocaleString('en-IN') %></p>
+                <p class="card-text"><%= listing.location %></p>
+            </div>
+
+            </div>
+           
+            
+    <% } %>
+
+</div>
+</body>

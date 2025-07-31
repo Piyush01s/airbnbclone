@@ -1,0 +1,58 @@
+<% layout("layout/boilerplate")-%>
+
+<body>
+    <h1>Edit Listing</h1>
+    Form to edit the listing details:
+    <form method="POST" class="needs-validation" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" novalidate>
+        <label for="title" class="label form-label fw-bold">Title:</label>
+        <input class="form-control m-1"type="text" id="title" name="title" value="<%= listing.title %>" required>
+
+        <label for="image" class="label form-label fw-bold">Current Image:</label><br>
+        <img src="<%= listing.image[0].url %>" alt="Listing Image" class="img-thumbnail m-1" style="max-width: 200px; max-height: 200px;">
+
+
+<br>
+        <label for="image" class="label form-label fw-bold">Change Image:</label>
+        <input class="form-control m-1" type="file" id="image" name="listing[image]" accept="image/*" >
+
+        <label for="description" class="label form-label fw-bold">Description:</label>
+        <textarea class="form-control m-1" id="description" name="description" required><%= listing.description %></textarea>
+
+        <label for="price" class="label form-label fw-bold">Price:</label>
+        <input class="form-control m-1" type="number" id="price" name="price" value="<%= listing.price %>" required>
+
+        <label for="location" class="label form-label fw-bold">Location:</label>
+        <input class="form-control m-1" type="text" id="location" name="location" value="<%= listing.location %>" required>
+
+        <label for="country" class="label form-label fw-bold">Country:</label>
+        <input class="form-control m-1" type="text" id="country" name="country" value="<%= listing.country %>" required>
+
+        <button class="btn btn-primary m-1" type="submit">Update Listing</button>
+    </form>
+
+    
+    
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+
+    </script>
+</body>
