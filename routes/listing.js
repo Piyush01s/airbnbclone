@@ -25,7 +25,7 @@ router
     .route('/')
     .get(listingController.allListings) // Use the controller method for all listings); // Get all listings
     .post(isLoggedIn,upload.single('listing[image]'), listingController.createListing); // Use the controller method for creating a listing // Create a new listing
-    
+
 
 
 

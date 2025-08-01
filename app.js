@@ -50,7 +50,7 @@ mongostoresession.on('error', function(e) {
 });
 
 const sessionOptions = {
-    mongostoresession,
+    store: mongostoresession,
     secret: process.env.secret,
     resave: false,
     saveUninitialized: true,    
@@ -83,6 +83,9 @@ app.use((req, res, next) => {
 });
 
 
+app.get('/', (req, res) => {
+    res.redirect('/listings'); // Redirect to the listings page
+});
 
 
 
@@ -112,9 +115,7 @@ app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
 
-app.get('/', (req, res) => {
-    res.redirect('/listings');
-});
+
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
