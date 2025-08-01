@@ -36,28 +36,28 @@ const { isLoggedIn } = require('./middleware.js'); // Import the isLoggedIn midd
 
 const { listingSchema, reviewSchema } = require('./schema.js');
 
-const mongostoresession = MongoStore.create({
+const store = MongoStore.create({
     mongoUrl: mongoatlasurl,
     crypto: {
         secret: process.env.secret, // Replace with your own secret key
     },
-    touchAfter: 24 * 3600 // Time in seconds after which the session will be updated
+    touchAfter: 24 * 3600, // Time in seconds after which the session will be updated
 });
 
 
-mongostoresession.on('error', function(e) {
+store.on('error', function(e) {
     console.log('Session store error', e);
 });
 
 const sessionOptions = {
-    store: mongostoresession,
+    store: store, // Use the store created above
     secret: process.env.secret,
     resave: false,
     saveUninitialized: true,    
     cookie: {
-        httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        maxAge: 1000 * 60 * 60 * 24 * 7 // Cookie expiration time (1 week)
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        httpOnly: true, // Helps prevent XSS attacks
     }
 };
 
@@ -69,7 +69,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate())); // Use the authenticate method from passport-local-mongoose
+passport.use(new LocalStrategy(User.authenticate())); // Provided by passport-local-mongoose
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -83,9 +83,7 @@ app.use((req, res, next) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.redirect('/listings'); // Redirect to the listings page
-});
+
 
 
 
@@ -111,8 +109,13 @@ async function main(){
 }
 
 
-app.listen(8080, () => {
-    console.log('Server is running on port 8080');
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+app.get('/', (req, res) => {
+    res.redirect('/listings'); // Redirect to the listings page
 });
 
 

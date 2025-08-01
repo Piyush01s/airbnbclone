@@ -18,7 +18,7 @@ router
     .route('/login')
     .get(userController.loginform)//login route
     .post(saveRedirectUrl,
-    passport.authenticate('local',{ failureRedirect: "/login", failureflash: true }), // Handle user login
+    passport.authenticate('local',{     successRedirect: '/listings',failureRedirect: "/login", failureflash: true }), // Handle user login
     userController.login);
 
 router.get('/logout', userController.logout);

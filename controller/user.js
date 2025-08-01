@@ -19,6 +19,7 @@ module.exports.signup = async (req, res) => {
     catch (e) {
         req.flash("error", "user already exists");
         res.redirect("/signup");
+        res.send('signup error: ' + e.message);
     }
 };
 
